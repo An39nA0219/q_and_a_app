@@ -1,0 +1,8 @@
+<h1>Questions#edit</h1>
+<%= form_with model: @question do |f| %>
+  <%= f.label :title, 'タイトル' %>
+  <%= f.text_field :title %>
+  <%= f.label :content, '内容' %>
+  <%= f.text_field :content %>
+  <%= f.submit '登録'%>
+<% end %>

@@ -1,0 +1,6 @@
+<h1>Questions#show</h1>
+<%= @question.user.name %>
+<%= @question.title %>
+<%= @question.content %>
+
+<%= link_to 'Edit question', edit_question_path(@question.id) %>

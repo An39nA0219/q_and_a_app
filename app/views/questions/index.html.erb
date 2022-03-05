@@ -1,1 +1,8 @@
 <h1>Questions#index</h1>
+<ul>
+  <% @questions.each do |question|%>
+    <li><%= link_to question.title, question_path(question.id) %></li>
+  <% end %>
+</ul>
+
+<%= link_to 'Create Question', new_question_path %>

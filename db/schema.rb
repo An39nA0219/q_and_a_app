@@ -12,11 +12,13 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_03_02_183001) do
   create_table "questions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
     t.string "title"
     t.text "content"
-    t.boolean "is_solved"
+    t.boolean "is_solved", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_questions_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -27,4 +29,5 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_02_183001) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "questions", "users"
 end
