@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  before_action :require_user_logged_in, only: [:destroy]
+
   def new
   end
 
@@ -8,15 +10,18 @@ class SessionsController < ApplicationController
     user = User.find_by(email: email)
     if user && user&.authenticate(password)
       session[:user_id] = user.id
-      redirect_to questions_path
+      redirect_to root_path
+      # TODO: フラッシュメッセージ OK
     else
       render :new
+      # TODO: フラッシュメッセージ FAIL
     end
   end
 
   def destroy
     session[:user_id] = nil
-    redirect_to root_url
+    redirect_to login_path
+    # TODO: フラッシュメッセージ OK
   end
 
   private

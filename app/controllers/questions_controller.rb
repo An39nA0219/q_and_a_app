@@ -1,4 +1,6 @@
 class QuestionsController < ApplicationController
+  before_action :require_user_logged_in, only: [:new, :create, :edit, :update, :destroy]
+  
   def index
     @questions = Question.all
   end
@@ -17,27 +19,46 @@ class QuestionsController < ApplicationController
     current_user.questions.build(question_params)
     if current_user.save!
       redirect_to questions_path
+      # TODO: フラッシュメッセージ OK
     else
       render :new
+      # TODO: フラッシュメッセージ FAIL
     end
   end
 
   def edit
     @question = Question.find_by(id: params[:id])
+    unless current_user == @question.user
+      redirect_to questions_path
+      # TODO: フラッシュメッセージ FAIL
+    end
   end
 
   def update
     @question = Question.find_by(id: params[:id])
-    if @question.update!(question_params)
-      redirect_to questions_path
+    if current_user == @question.user
+      if @question.update!(question_params)
+        redirect_to questions_path
+        # TODO: フラッシュメッセージ OK
+      else
+        render :edit
+        # TODO: フラッシュメッセージ FAIL
+      end
     else
-      render :edit
+      redirect_to questions_path
+      # TODO: フラッシュメッセージ FAIL
     end
   end
 
   def destroy
     @question = Question.find_by(id: params[:id])
-    @question.destroy!
+    if current_user == @question.user
+      @question.destroy!
+      # TODO: フラッシュメッセージ OK
+    else
+      # TODO: フラッシュメッセージ FAIL
+    end
+    redirect_to questions_path
   end
 
   private

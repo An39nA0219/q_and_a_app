@@ -1,26 +1,45 @@
 class AnswersController < ApplicationController
+  before_action :require_user_logged_in
+
   def create
     question = Question.find_by(id: params[:question_id])
     if question
       answer = current_user.answers.build(answer_params)
       question.answers << answer
-      redirect_to question_path(question.id)
+      # TODO: フラッシュメッセージ OK
+    else
+      # TODO: フラッシュメッセージ OK
     end
+    redirect_to question_path(question.id)
   end
 
   def update
     answer = Answer.find_by(id: params[:id])
-    if answer.update!(answer_params)
-      redirect_to question_path(answer.question_id)
+    if current_user == answer.answerer
+      if answer.update!(answer_params)
+        # TODO: フラッシュメッセージ OK
+      else
+        # TODO: フラッシュメッセージ FAIL
+      end
+    else
+      # TODO: フラッシュメッセージ FAIL
     end
+    redirect_to question_path(answer.question_id)
   end
 
   def destroy
     answer = Answer.find_by(id: params[:id])
     question_id = answer.question_id
-    if answer.destroy!
-      redirect_to question_path(question_id)
+    if current_user == answer.answerer
+      if answer.destroy!
+        # TODO: フラッシュメッセージ OK
+      else
+        # TODO: フラッシュメッセージ FAIL
+      end
+    else
+      # TODO: フラッシュメッセージ FAIL
     end
+    redirect_to question_path(question_id)
   end
 
   private
