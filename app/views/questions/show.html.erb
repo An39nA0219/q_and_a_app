@@ -4,3 +4,22 @@
 <%= @question.content %>
 
 <%= link_to 'Edit question', edit_question_path(@question.id) %>
+
+<%= form_with url: answers_path do |f| %>
+  <%= f.label :content, '内容' %>
+  <%= f.text_field :content %>
+  <%= f.submit '登録'%>
+<% end %>
+
+<% @answers.each do |answer| %>
+  <div>
+    <%= answer.content %>
+    <%= form_with url: answer_path(answer.id), method: "patch" do |f| %>
+      <%= f.label :content, '内容' %>
+      <%= f.text_field :content %>
+      <%= f.hidden_field :question_id, value: @question.id %>
+      <%= f.submit '変更'%>
+    <% end %>
+    <%= button_to '削除', answer_path(answer.id), method: :delete %>
+  </div>
+<% end %>
