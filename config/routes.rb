@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'questions/resources'
   get 'signup', to: 'users#new'
 
   get 'login', to: 'sessions#new'
@@ -9,5 +8,5 @@ Rails.application.routes.draw do
   resources :users, only: [:show, :new, :create, :edit, :update]
   resources :questions
   resources :answers, only: [:create, :update, :destroy]
-
+  resources :question_statuses, only: [:create, :destroy]
 end

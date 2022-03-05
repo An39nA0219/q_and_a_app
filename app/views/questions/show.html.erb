@@ -2,8 +2,11 @@
 <%= @question.user.name %>
 <%= @question.title %>
 <%= @question.content %>
+<%= @question.is_solved %>
 
 <%= link_to 'Edit question', edit_question_path(@question.id) %>
+<%= button_to '解決済みにする', question_statuses_path(id: @question.id) %>
+<%= button_to '未解決に戻す', question_status_path(id: @question.id), method: :delete %>
 
 <%= form_with url: answers_path do |f| %>
   <%= f.label :content, '内容' %>
