@@ -6,9 +6,15 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find_by(id: params[:id])
-    @answer = Answer.new
-    @answers = Answer.where(question_id: params[:id])
+    question = Question.find_by(id: params[:id])
+    if question
+      @question = question
+      @answer = Answer.new
+      @answers = Answer.where(question_id: params[:id])
+    else
+      flash[:danger] = '質問が見つかりませんでした'
+      redirect_to questions_path
+    end
   end
 
   def new

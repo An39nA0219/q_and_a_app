@@ -1,0 +1,9 @@
+<h1>Admins/Users#index</h1>
+<ul>
+  <% @users.each do |user|%>
+    <li>
+      <%= user.name %>
+      <%= button_to '削除', admins_user_path(answer.id), method: :delete %>
+    </li>
+  <% end %>
+</ul>

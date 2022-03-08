@@ -6,6 +6,7 @@ class User < ApplicationRecord
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
   validates :password_digest, presence: true
+  validates :is_admin, presence: true
 
   has_many :questions
   has_many :answers, foreign_key: :answerer_id

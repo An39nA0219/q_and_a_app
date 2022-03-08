@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_05_180955) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_08_165502) do
   create_table "answers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "question_id", null: false
     t.bigint "answerer_id", null: false
@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_05_180955) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_admin", default: false, null: false
   end
 
   add_foreign_key "answers", "questions"
