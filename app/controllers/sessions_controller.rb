@@ -10,11 +10,11 @@ class SessionsController < ApplicationController
     user = User.find_by(email: email)
     if user && user&.authenticate(password)
       session[:user_id] = user.id
+      flash[:success] = "ログインしました"
       redirect_to root_path
-      # TODO: フラッシュメッセージ OK
     else
+      flash.now[:danger] = "ログインできませんでした"
       render :new
-      # TODO: フラッシュメッセージ FAIL
     end
   end
 

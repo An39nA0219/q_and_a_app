@@ -16,49 +16,71 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    current_user.questions.build(question_params)
+    question = current_user.questions.build(question_params)
     if current_user.save!
-      redirect_to questions_path
-      # TODO: フラッシュメッセージ OK
+      flash[:success] = '質問を投稿しました'
+      redirect_to question_path(question.id)
     else
+      flash.now[:danger] = '質問を投稿できませんでした'
       render :new
-      # TODO: フラッシュメッセージ FAIL
     end
   end
 
   def edit
-    @question = Question.find_by(id: params[:id])
-    unless current_user == @question.user
+    question = Question.find_by(id: params[:id])
+    if question
+      if current_user == @question.user
+        @question = question
+      else
+        flash[:danger] = '質問の編集権限がありません'
+        redirect_to question_path(question.id)
+      end
+    else
+      flash[:danger] = '質問が見つかりませんでした'
       redirect_to questions_path
-      # TODO: フラッシュメッセージ FAIL
     end
   end
 
   def update
-    @question = Question.find_by(id: params[:id])
-    if current_user == @question.user
-      if @question.update!(question_params)
-        redirect_to questions_path
-        # TODO: フラッシュメッセージ OK
+    question = Question.find_by(id: params[:id])
+    if question
+      if current_user == @question.user
+        if question.update!(question_params)
+          flash[:success] = '質問を編集しました'
+          redirect_to question_path(question.id)
+        else
+          flash.now[:danger] = '質問を編集できませんでした'
+          render :edit
+        end
       else
-        render :edit
-        # TODO: フラッシュメッセージ FAIL
+        flash[:danger] = '質問の編集権限がありません'
+        redirect_to question_path(question.id)
       end
     else
+      flash[:danger] = '質問が見つかりませんでした'
       redirect_to questions_path
-      # TODO: フラッシュメッセージ FAIL
     end
   end
 
   def destroy
-    @question = Question.find_by(id: params[:id])
-    if current_user == @question.user
-      @question.destroy!
-      # TODO: フラッシュメッセージ OK
+    question = Question.find_by(id: params[:id])
+    if question
+      if current_user == question.user
+        if question.destroy!
+          flash[:success] = '質問を削除しました'
+          redirect_to questions_path
+        else
+          flash[:danger] = '質問を削除できませんでした'
+          redirect_to question_path(question.id)
+        end
+      else
+        flash[:danger] = '質問の削除権限がありません'
+        redirect_to question_path(question.id)
+      end
     else
-      # TODO: フラッシュメッセージ FAIL
+      flash[:danger] = '質問が見つかりませんでした'
+      redirect_to questions_path
     end
-    redirect_to questions_path
   end
 
   private

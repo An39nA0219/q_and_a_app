@@ -1,5 +1,5 @@
 <h1>Users#new</h1>
-<%= form_with model: @user do |f| %>
+<%= form_with model: @user, data: { turbo: false }) do |f| %>
   <%= f.label :name, '名前' %>
   <%= f.text_field :name %>
   <%= f.submit '登録'%>

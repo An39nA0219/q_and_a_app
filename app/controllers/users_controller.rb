@@ -11,35 +11,47 @@ class UsersController < ApplicationController
 
   def create
     if User.create!(user_params)
-      # TODO: フラッシュメッセージ OK
+      flash[:success] = 'アカウントを作成しました'
       redirect_to login_path
     else
-      # TODO: フラッシュメッセージ FAIL
+      flash.now[:danger] = 'アカウントを作成できませんでした'
       render :new
     end
   end
 
   def edit
-    @user = User.find_by(id: params[:id])
-    unless current_user == @user
-      # TODO: フラッシュメッセージ FAIL
-      redirect_to root_path
+    user = User.find_by(id: params[:id])
+    if user
+      if current_user == user
+        @user = user
+      else
+        flash[:danger] = 'アカウントの編集権限がありません'
+        redirect_to root_path
+      end
+    else
+        flash[:danger] = 'アカウントが見つかりませんでした'
+        redirect_to root_path
     end
   end
 
   def update
-    @user = User.find_by(id: params[:id])
-    if current_user == @user
-      if @user.update!(user_params)
-        # TODO: フラッシュメッセージ OK
-        render root_path
+    user = User.find_by(id: params[:id])
+    if user
+      if current_user == user
+        if user.update!(user_params)
+          flash[:success] = 'アカウントを編集しました'
+          render root_path
+        else
+          flash.now[:danger] = 'アカウントの編集ができませんでした'
+          render :edit
+        end
       else
-        # TODO: フラッシュメッセージ FAIL
-        render :edit
+        flash[:danger] = 'アカウントの編集権限がありません'
+        redirect_to root_path
       end
     else
-      # TODO: フラッシュメッセージ FAIL
-      render root_path
+      flash[:danger] = 'アカウントが見つかりませんでした'
+      redirect_to root_path
     end
   end
 

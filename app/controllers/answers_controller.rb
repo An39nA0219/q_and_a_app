@@ -6,40 +6,53 @@ class AnswersController < ApplicationController
     if question
       answer = current_user.answers.build(answer_params)
       question.answers << answer
-      # TODO: フラッシュメッセージ OK
+      flash[:success] = '回答を投稿しました'
+      redirect_to question_path(question.id)
     else
-      # TODO: フラッシュメッセージ OK
+      flash[:danger] = '質問が見つかりませんでした'
+      redirect_to root_path
     end
-    redirect_to question_path(question.id)
   end
 
   def update
     answer = Answer.find_by(id: params[:id])
-    if current_user == answer.answerer
-      if answer.update!(answer_params)
-        # TODO: フラッシュメッセージ OK
+    if answer
+      if current_user == answer.answerer
+        if answer.update!(answer_params)
+          flash[:success] = '回答を編集しました'
+          redirect_to question_path(answer.question_id)
+        else
+          flash.now[:danger] = '回答を編集できませんでした'
+          render 'questions/show'
+        end
       else
-        # TODO: フラッシュメッセージ FAIL
+        flash.now[:danger] = '回答の編集権限がありません'
+        render 'questions/show'
       end
     else
-      # TODO: フラッシュメッセージ FAIL
+      flash[:danger] = '回答が見つかりませんでした'
+      redirect_to root_path
     end
-    redirect_to question_path(answer.question_id)
   end
 
   def destroy
     answer = Answer.find_by(id: params[:id])
-    question_id = answer.question_id
-    if current_user == answer.answerer
-      if answer.destroy!
-        # TODO: フラッシュメッセージ OK
+    if answer
+      question_id = answer.question_id
+      if current_user == answer.answerer
+        if answer.destroy!
+          flash[:success] = '回答を削除しました'
+        else
+          flash[:danger] = '回答を削除できませんでした'
+        end
       else
-        # TODO: フラッシュメッセージ FAIL
+        flash[:danger] = '回答の削除権限がありません'
       end
+      redirect_to question_path(question_id)
     else
-      # TODO: フラッシュメッセージ FAIL
+      flash[:danger] = '回答が見つかりませんでした'
+      redirect_to root_path
     end
-    redirect_to question_path(question_id)
   end
 
   private
