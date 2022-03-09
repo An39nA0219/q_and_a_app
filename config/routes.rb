@@ -8,8 +8,13 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
 
   resources :users, only: [:show, :new, :create, :edit, :update]
-  resources :questions
-  resources :answers, only: [:create, :update, :destroy]
+  resources :questions do
+    collection do
+      get 'solved', to: 'questions#solved'
+      get 'unsolved', to: 'questions#unsolved'
+    end
+  end
+  resources :answers, only: [:create, :destroy]
   resources :question_statuses, only: [:create, :destroy]
 
   namespace :admins do
@@ -18,7 +23,12 @@ Rails.application.routes.draw do
     delete 'logout', to: 'sessions#destroy'
 
     resources :users, only: [:index, :destroy]
-    resources :questions, only: [:index, :show, :destroy]
+    resources :questions, only: [:index, :show, :destroy] do
+      collection do
+        get 'solved', to: 'questions#solved'
+        get 'unsolved', to: 'questions#unsolved'
+      end
+    end
     resources :answers, only: [:destroy]
   end
 end

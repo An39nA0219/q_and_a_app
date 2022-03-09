@@ -1,0 +1,6 @@
+<% if current_user == question.user %>
+  <div style="display: flex">
+    <%= link_to '編集', edit_question_path(question.id), class: "btn btn-success button" %>
+    <%= button_to '削除', question_path(question.id), method: :delete, class: "btn btn-danger button" %>
+  </div>
+<% end %>

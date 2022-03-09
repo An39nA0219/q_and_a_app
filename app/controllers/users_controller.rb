@@ -38,9 +38,9 @@ class UsersController < ApplicationController
     user = User.find_by(id: params[:id])
     if user
       if current_user == user
-        if user.update!(user_params)
+        if user.update!(user_edit_params)
           flash[:success] = 'アカウントを編集しました'
-          render root_path
+          redirect_to root_path
         else
           flash.now[:danger] = 'アカウントの編集ができませんでした'
           render :edit
@@ -58,6 +58,10 @@ class UsersController < ApplicationController
   private
 
   def user_params
+    params.required(:user).permit(:name, :email, :password)
+  end
+
+  def user_edit_params
     params.required(:user).permit(:name)
   end
 end

@@ -1,8 +1,16 @@
 class QuestionsController < ApplicationController
   before_action :require_user_logged_in, only: [:new, :create, :edit, :update, :destroy]
-  
+
   def index
     @questions = Question.all
+  end
+
+  def solved
+    @questions = Question.where(is_solved: true)
+  end
+
+  def unsolved
+    @questions = Question.where(is_solved: false)
   end
 
   def show
@@ -35,7 +43,7 @@ class QuestionsController < ApplicationController
   def edit
     question = Question.find_by(id: params[:id])
     if question
-      if current_user == @question.user
+      if current_user == question.user
         @question = question
       else
         flash[:danger] = '質問の編集権限がありません'
@@ -50,7 +58,7 @@ class QuestionsController < ApplicationController
   def update
     question = Question.find_by(id: params[:id])
     if question
-      if current_user == @question.user
+      if current_user == question.user
         if question.update!(question_params)
           flash[:success] = '質問を編集しました'
           redirect_to question_path(question.id)

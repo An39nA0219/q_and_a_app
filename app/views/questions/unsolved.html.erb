@@ -1,15 +1,14 @@
 <div class="wrapper">
   <div class="container">
     <div class="tab-area">
-
+      <div class="tab">
+        <%= link_to '全て', questions_path %>
+      </div>
       <div class="tab active-tab">
-        <%= link_to '全て', admins_questions_path %>
+        <%= link_to '未解決', unsolved_questions_path %>
       </div>
       <div class="tab">
-        <%= link_to '未解決', unsolved_admins_questions_path %>
-      </div>
-      <div class="tab">
-        <%= link_to '解決', solved_admins_questions_path %>
+        <%= link_to '解決', solved_questions_path %>
       </div>
     </div>
 
@@ -39,7 +38,7 @@
             <div class="right-part">
               <div style="display: flex">
                 <div>
-                  <%= link_to question.title, admins_question_path(question.id) %>
+                  <%= link_to question.title, question_path(question.id) %>
                 </div>
                 <div>
                   <%= render 'layouts/question_status_badge', question: question %>

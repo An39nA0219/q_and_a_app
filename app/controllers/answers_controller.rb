@@ -14,27 +14,6 @@ class AnswersController < ApplicationController
     end
   end
 
-  def update
-    answer = Answer.find_by(id: params[:id])
-    if answer
-      if current_user == answer.answerer
-        if answer.update!(answer_params)
-          flash[:success] = '回答を編集しました'
-          redirect_to question_path(answer.question_id)
-        else
-          flash.now[:danger] = '回答を編集できませんでした'
-          render 'questions/show'
-        end
-      else
-        flash.now[:danger] = '回答の編集権限がありません'
-        render 'questions/show'
-      end
-    else
-      flash[:danger] = '回答が見つかりませんでした'
-      redirect_to root_path
-    end
-  end
-
   def destroy
     answer = Answer.find_by(id: params[:id])
     if answer

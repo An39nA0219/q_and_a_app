@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     redirect_to login_path
-    # TODO: フラッシュメッセージ OK
+    flash[:success] = "ログアウトしました"
   end
 
   private

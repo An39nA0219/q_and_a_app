@@ -11,7 +11,7 @@ class Admins::SessionsController < ApplicationController
     if user && user&.authenticate(password) && user.is_admin
       session[:user_id] = user.id
       flash[:success] = 'ログインしました'
-      redirect_to root_path
+      redirect_to admins_questions_path
     else
       flash.now[:danger] = 'ログインできませんでした'
       render :new
@@ -21,7 +21,7 @@ class Admins::SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     flash[:success] = 'ログアウトしました'
-    redirect_to login_path
+    redirect_to admins_login_path
   end
 
   private

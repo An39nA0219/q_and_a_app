@@ -1,13 +1,49 @@
-<h1>Admins/Questions#show</h1>
-<%= @question.user.name %>
-<%= @question.title %>
-<%= @question.content %>
-<%= @question.is_solved %>
-<%= button_to '削除', admins_question_path(@question.id), method: :delete %>
-
-<% @answers.each do |answer| %>
-  <div>
-    <%= answer.content %>
-    <%= button_to '削除', admins_answer_path(answer.id), method: :delete %>
+<div class="wrapper">
+  <div class="container">
+    <div class="card" style="width: 100%">
+      <div class="card-body flex">
+        <div class="left-part">            
+          <img src="https://cdn.pixabay.com/photo/2014/04/14/20/11/pink-324175_960_720.jpg" style="height: 80px"/>
+          <div class="card-test" style="text-align: center">
+            <%= @question.user.name %>
+            <br>
+            <%= @question.created_at.to_s(:db) %>
+          </div>
+        </div>
+        <div class="card-title">
+          <div class="right-part">
+            <div style="display: flex">
+              <div>
+                <%= @question.title %>
+              </div>
+              <div>
+                <%= render 'layouts/question_status_badge', question: @question %>
+              </div>
+              <div>
+                <%= button_to '削除', admins_question_path(@question.id), method: :delete, class: "btn btn-danger button" %>
+              </div>
+            </div>
+            <div style="margin-top: 20px; width: 800px;">
+              <p style="word-break: normal;"><%= @question.content %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-<% end %>
+
+  <div class="container">
+    <h3>回答一覧</h3>
+    <% @answers.each do |answer| %>
+      <div class="card">
+        <div class="card-body">
+          <%= answer.answerer.name %>
+          <%= answer.content %>
+          <div class="flex">
+          <%= button_to '削除', admins_answer_path(answer.id), method: :delete, class: "btn btn-danger button" %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
