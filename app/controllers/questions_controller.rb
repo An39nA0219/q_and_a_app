@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
                 else
                   Question.all
                 end
-    @questions = questions.page(params[:page]).per(1)
+    @questions = questions.page(params[:page]).per(10)
   end
 
   def solved
@@ -48,6 +48,10 @@ class QuestionsController < ApplicationController
     question = current_user.questions.build(question_params)
     if current_user.save!
       flash[:success] = '質問を投稿しました'
+      users = User.all_others(current_user.id)
+      users.each do |user|
+        NotificationMailer.notification_of_getting_question(current_user.id, question).deliver_later
+      end
       redirect_to question_path(question.id)
     else
       flash.now[:danger] = '質問を投稿できませんでした'
