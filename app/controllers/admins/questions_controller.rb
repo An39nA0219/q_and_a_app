@@ -2,15 +2,30 @@ class Admins::QuestionsController < ApplicationController
   before_action :require_admin_logged_in
 
   def index
-    @questions = Question.all
+    questions = if !!params[:words]
+                  Question.where('title LIKE ?', "%#{params[:words]}%")
+                else
+                  Question.all
+                end
+    @questions = questions.page(params[:page]).per(10)
   end
 
   def solved
-    @questions = Question.where(is_solved: true)
+    questions = if !!params[:words]
+                  Question.where(is_solved: true).where('title LIKE ?', "%#{params[:words]}%")
+                else
+                  Question.where(is_solved: true)
+                end
+    @questions = questions.page(params[:page]).per(10)
   end
 
   def unsolved
-    @questions = Question.where(is_solved: false)
+    questions = if !!params[:words]
+                  Question.where(is_solved: false).where('title LIKE ?', "%#{params[:words]}%")
+                else
+                  Question.where(is_solved: false)
+                end
+    @questions = questions.page(params[:page]).per(10)
   end
 
   def show

@@ -14,9 +14,9 @@
     </div>
 
     <div class="search-area">
-      <%= form_with url: '/questions' do |f| %>
+      <%= form_with url: '/admins/questions/solved', method: :get do |f| %>
         <div class="input-group">
-          <%= f.text_field :search_words, class: 'form-control' %>
+          <%= f.text_field :words, class: 'form-control' %>
           <span class="input-group-append">
             <%= f.submit '検索', class: 'btn btn-primary'%> 
           </span>
@@ -56,5 +56,8 @@
         </div>
       </div>
     <% end %>
+
+    <%= paginate @questions %>
+    
   </div>
 </div>
