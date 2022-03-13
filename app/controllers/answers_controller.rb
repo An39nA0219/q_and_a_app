@@ -7,6 +7,10 @@ class AnswersController < ApplicationController
       answer = current_user.answers.build(answer_params)
       question.answers << answer
       flash[:success] = '回答を投稿しました'
+      users = User.all_other_answerers_with_questioner(current_user.id, question)
+      users.each do |user|
+        NotificationMailer.notification_of_getting_answer(user, answer).deliver_later
+      end
       redirect_to question_path(question.id)
     else
       flash[:danger] = '質問が見つかりませんでした'
