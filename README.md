@@ -1,25 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Q&Aアプリです
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# q_and_a_app
+# DB設計
+* users
+  * name
+  * email
+  * password
+  * is_admin
+* questions
+  * user_id
+  * title
+  * content
+  * is_solved
+* answers
+  * question_id
+  * answerer_id
+  * content
