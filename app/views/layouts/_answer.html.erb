@@ -15,11 +15,13 @@
       </div>
     </div>
     <div class="right-part" style="display: flex; width :100%;">
-      <div style="width: 90%">
+      <div style="width: 80%">
         <%= answer.content %>
       </div>
       <div>
-        <% if current_user == answer.answerer %>
+        <% if is_for_admin? %>
+          <%= button_to '削除', admins_answer_path(answer.id), method: :delete, class: "btn btn-danger button" %>
+        <% elsif !is_for_admin? && current_user == answer.answerer %>
           <%= button_to '削除', answer_path(answer.id), method: :delete, class: "btn btn-danger button" %>
         <% end %>
       </div>

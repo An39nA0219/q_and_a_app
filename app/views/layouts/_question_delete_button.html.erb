@@ -1,0 +1,5 @@
+<% if is_for_admin? %>
+  <%= button_to '削除', admins_question_path(question.id), method: :delete, class: "btn btn-danger button" %>
+<% else %>
+  <%= button_to '削除', question_path(question.id), method: :delete, class: "btn btn-danger button" %>
+<% end %>

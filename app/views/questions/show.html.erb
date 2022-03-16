@@ -1,48 +1,9 @@
 <div class="wrapper">
   <div class="container">
-    <div class="card" style="width: 100%">
-      <div class="card-body flex">
-        <div class="left-part">            
-          <img src="https://cdn.pixabay.com/photo/2014/04/14/20/11/pink-324175_960_720.jpg" style="height: 80px"/>
-          <div class="card-test" style="text-align: center">
-            <%= @question.user.name %>
-            <br>
-            <%= @question.created_at.to_s(:db) %>
-          </div>
-        </div>
-        <div class="card-title">
-          <div class="right-part">
-            <div style="display: flex">
-              <div>
-                <%= @question.title %>
-              </div>
-              <div>
-                <%= render 'layouts/question_status_badge', question: @question %>
-              </div>
-              <div>
-                <% if logged_in? && current_user == @question.user %>
-                  <% if @question.is_solved %>
-                    <%= button_to '未解決に戻す', question_status_path(id: @question.id), method: :delete, class: "btn btn-primary button" %>
-                  <% else %>
-                    <%= button_to '解決済みにする', question_statuses_path(id: @question.id), class: "btn btn-primary button" %>
-                  <% end %>
-                <% end %>
-              </div>
-              <div>
-                <%= render 'layouts/question_control_buttons', question: @question %>
-              </div>
-            </div>
-            <div style="margin-top: 20px; width: 800px;">
-              <p style="word-break: normal;"><%= @question.content %></p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <%= render 'layouts/question', question: @question, show_path: nil %>
   </div>
-
-  <% if logged_in? %>
-    <div class="container">
+  <div class="container"">
+    <% if logged_in? %>
       <h3>回答する</h3>
       <%= form_with url: answers_path, data: { turbo: false } do |f| %>
         <div class="form-group">
@@ -51,9 +12,8 @@
         <%= f.hidden_field :question_id, value: @question.id %>
         <%= f.submit '回答する', class: 'btn btn-primary btn-block' %>
       <% end %>
-    </div>
-  <% end %>
-
+    <% end %>
+  </div>
   <div class="container">
     <h3>回答一覧</h3>
     <% @answers.each do |answer| %>

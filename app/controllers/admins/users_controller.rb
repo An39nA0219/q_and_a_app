@@ -9,7 +9,10 @@ class Admins::UsersController < ApplicationController
     user = User.find_by(id: params[:id])
     if user
       if !user.is_admin
-        if user.answers.destroy_all && user.questions.destroy_all && user.destroy!
+        user.answers.destroy_all
+        user.questions.destroy_all
+        user.image.purge
+        if user.destroy!
           flash[:success] = 'アカウントを削除しました'
           redirect_to admins_users_path
         else
