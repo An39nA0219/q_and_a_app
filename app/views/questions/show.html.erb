@@ -57,17 +57,7 @@
   <div class="container">
     <h3>回答一覧</h3>
     <% @answers.each do |answer| %>
-      <div class="card">
-        <div class="card-body">
-          <%= answer.answerer.name %>
-          <%= answer.content %>
-          <div class="flex">
-            <% if current_user == answer.answerer %>
-              <%= button_to '削除', answer_path(answer.id), method: :delete, class: "btn btn-danger button" %>
-            <% end %>
-          </div>
-        </div>
-      </div>
+      <%= render 'layouts/answer', answer: answer %>
     <% end %>
   </div>
 </div>

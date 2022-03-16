@@ -1,62 +1,10 @@
 <div class="wrapper">
   <div class="container">
-    <div class="tab-area">
-      <div class="tab">
-        <%= link_to '全て', questions_path %>
-      </div>
-      <div class="tab active-tab">
-        <%= link_to '未解決', unsolved_questions_path %>
-      </div>
-      <div class="tab">
-        <%= link_to '解決', solved_questions_path %>
-      </div>
-    </div>
-
-    <div class="search-area">
-      <%= form_with url: '/questions/unsolved', method: :get do |f| %>
-        <div class="input-group">
-          <%= f.text_field :words, class: 'form-control' %>
-          <span class="input-group-append">
-            <%= f.submit '検索', class: 'btn btn-primary'%> 
-          </span>
-        </div>
-      <% end %>
-    </div>
-    
+    <%= render 'layouts/tabs', active: 'unsolved' %>
+    <%= render 'layouts/search_field', url: '/questions/unsolved' %>
     <% @questions.each do |question|%>
-      <div class="card" style="width: 100%">
-        <div class="card-body flex">
-          <div class="left-part">            
-            <img src="https://cdn.pixabay.com/photo/2014/04/14/20/11/pink-324175_960_720.jpg" style="height: 80px"/>
-            <div class="card-test" style="text-align: center">
-              <%= question.user.name %>
-              <br>
-              <%= question.created_at.to_s(:db) %>
-            </div>
-          </div>
-          <div class="card-title">
-            <div class="right-part">
-              <div style="display: flex">
-                <div>
-                  <%= link_to question.title, question_path(question.id) %>
-                </div>
-                <div>
-                  <%= render 'layouts/question_status_badge', question: question %>
-                </div>
-                <div>
-                  <%= render 'layouts/question_control_buttons', question: question %>
-                </div>
-              </div>
-              <div style="margin-top: 20px">
-                <%= content_sumnail(question.content) %>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <%= render 'layouts/question', question: question %>
     <% end %>
-
-    <%= paginate @questions %>
-
+    <%= render 'layouts/paginate', questions: @questions %>
   </div>
 </div>

@@ -17,7 +17,13 @@
         </tr>
         <tr>
           <td>アバター</td>
-          <td></td>
+          <td>
+            <% if @user.image.attached? %>
+              <%= image_tag @user.image, class: "icon" %>
+            <% else %>
+              <%= image_tag 'default_user.png', class: "icon" %>
+            <% end %>
+          </td>
         </tr>
       </table>
     </div>

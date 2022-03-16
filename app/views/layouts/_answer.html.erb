@@ -1,0 +1,28 @@
+<div class="card" style="width: 100%">
+  <div class="card-body flex">
+    <div class="left-part">  
+      <div class="icon-area">          
+        <% if answer.answerer.image.attached? %>
+          <%= image_tag answer.answerer.image, class: "icon" %>
+        <% else %>
+          <%= image_tag 'default_user.png', class: "icon" %>
+        <% end %>
+      </div>
+      <div style="text-align: center">
+        <%= answer.answerer.name %>
+        <br>
+        <%= answer.created_at.to_s(:db) %>
+      </div>
+    </div>
+    <div class="right-part" style="display: flex; width :100%;">
+      <div style="width: 90%">
+        <%= answer.content %>
+      </div>
+      <div>
+        <% if current_user == answer.answerer %>
+          <%= button_to '削除', answer_path(answer.id), method: :delete, class: "btn btn-danger button" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

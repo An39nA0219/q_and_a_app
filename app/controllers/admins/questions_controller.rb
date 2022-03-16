@@ -3,27 +3,27 @@ class Admins::QuestionsController < ApplicationController
 
   def index
     questions = if !!params[:words]
-                  Question.where('title LIKE ?', "%#{params[:words]}%")
+                  Question.where('title LIKE ?', "%#{params[:words]}%").order(created_at: 'desc')
                 else
-                  Question.all
+                  Question.all.order(created_at: 'desc')
                 end
     @questions = questions.page(params[:page]).per(10)
   end
 
   def solved
     questions = if !!params[:words]
-                  Question.where(is_solved: true).where('title LIKE ?', "%#{params[:words]}%")
+                  Question.where(is_solved: true).where('title LIKE ?', "%#{params[:words]}%").order(created_at: 'desc')
                 else
-                  Question.where(is_solved: true)
+                  Question.where(is_solved: true).order(created_at: 'desc')
                 end
     @questions = questions.page(params[:page]).per(10)
   end
 
   def unsolved
     questions = if !!params[:words]
-                  Question.where(is_solved: false).where('title LIKE ?', "%#{params[:words]}%")
+                  Question.where(is_solved: false).where('title LIKE ?', "%#{params[:words]}%").order(created_at: 'desc')
                 else
-                  Question.where(is_solved: false)
+                  Question.where(is_solved: false).order(created_at: 'desc')
                 end
     @questions = questions.page(params[:page]).per(10)
   end

@@ -10,7 +10,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    if User.create!(user_params)
+    user = User.new(user_params)
+    if user.save!
+      user.image.attach(user_params[:image]) if user_params[:image]
       flash[:success] = 'アカウントを作成しました'
       redirect_to login_path
     else
@@ -39,6 +41,7 @@ class UsersController < ApplicationController
     if user
       if current_user == user
         if user.update!(user_edit_params)
+          user.image.attach(user_params[:image]) if user_params[:image]
           flash[:success] = 'アカウントを編集しました'
           redirect_to root_path
         else
@@ -58,7 +61,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.required(:user).permit(:name, :email, :password)
+    params.required(:user).permit(:name, :email, :password, :image)
   end
 
   def user_edit_params
