@@ -18,7 +18,7 @@
       <div class="right-part">
         <div style="display: flex">
           <div>
-            <%= link_to question.title, question_path(question.id) %>
+            <%= link_to question.title, show_path %>
           </div>
           <div>
             <%= render 'layouts/question_status_badge', question: question %>

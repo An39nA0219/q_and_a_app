@@ -99,7 +99,7 @@ class QuestionsController < ApplicationController
     question = Question.find_by(id: params[:id])
     if question
       if current_user == question.user
-        if question.destroy!
+        if question.answers.destroy_all && question.destroy!
           flash[:success] = '質問を削除しました'
           redirect_to questions_path
         else

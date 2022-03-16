@@ -3,7 +3,7 @@
     <%= render 'layouts/tabs', active: 'all' %>
     <%= render 'layouts/search_field', url: '/questions' %>
     <% @questions.each do |question|%>
-      <%= render 'layouts/question', question: question %>
+      <%= render 'layouts/question', question: question, show_path: question_path(question.id) %>
     <% end %>
     <%= render 'layouts/paginate', questions: @questions %>
   </div>

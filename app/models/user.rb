@@ -7,7 +7,7 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   validates :password_digest, presence: true
 
-  has_many :questions, dependent: :destroy
+  has_many :questions
   has_many :answers, foreign_key: :answerer_id
   has_one_attached :image
 
