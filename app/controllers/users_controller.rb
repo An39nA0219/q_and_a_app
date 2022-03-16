@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:show, :edit, :update]
+  before_action :require_user_logged_in, only: [:index, :show, :edit, :update]
+
+  def index
+    @users = User.all.order(created_at: 'asc').page(params[:page]).per(10)
+  end
 
   def show
     @user = current_user

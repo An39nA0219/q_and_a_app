@@ -2,14 +2,14 @@ class Admins::UsersController < ApplicationController
   before_action :require_admin_logged_in
 
   def index
-    @user = User.all
+    @users = User.all.order(created_at: 'asc').page(params[:page]).per(10)
   end
 
   def destroy
     user = User.find_by(id: params[:id])
     if user
       if !user.is_admin
-        if user.destroy!
+        if user.answers.destroy_all && user.questions.destroy_all && user.destroy!
           flash[:success] = 'アカウントを削除しました'
           redirect_to admins_users_path
         else

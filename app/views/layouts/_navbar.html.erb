@@ -1,6 +1,6 @@
 <header class="mb-4">
   <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-    <% if logged_in? && current_user.is_admin %>
+    <% if logged_in? && current_user.is_admin && is_for_admin? %>
       <a class="navbar-brand" href="/admins/questions">Q&A for Admin</a>
     <% else %>
       <a class="navbar-brand" href="/">Q&A</a>
@@ -11,11 +11,13 @@
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
       <ul class="navbar-nav">
-        <% if logged_in? && current_user.is_admin %>
+        <% if logged_in? && current_user.is_admin && is_for_admin? %>
+          <li class="nav-item"><%= link_to 'ユーザー一覧', admins_users_path, class: 'nav-link' %></li>
           <li class="nav-item"><%= button_to 'ログアウト', admins_logout_path, method: :delete, class: 'nav-link button-to-ink' %></li>
-        <% elsif logged_in? && !current_user.is_admin %>
+        <% elsif logged_in? && !is_for_admin? %>
           <li class="nav-item"><%= link_to '質問を投稿', new_question_path, class: 'nav-link' %></li>
-          <li class="nav-item"><%= link_to 'マイページ', user_path(current_user.id), class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to 'ユーザー一覧', users_path, class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to "#{current_user.name}さん マイページ", user_path(current_user.id), class: 'nav-link' %></li>
           <li class="nav-item"><%= button_to 'ログアウト', logout_path, method: :delete, class: 'nav-link button-to-ink' %></li>
         <% else %>
           <li class="nav-item"><%= link_to 'サインアップ', signup_path, class: 'nav-link' %></li>

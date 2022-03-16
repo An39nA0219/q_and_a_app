@@ -6,4 +6,8 @@ module SessionsHelper
   def logged_in?
     !!current_user
   end
+
+  def is_for_admin?
+    session[:is_for_admin]
+  end
 end
