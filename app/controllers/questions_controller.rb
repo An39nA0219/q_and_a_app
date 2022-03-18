@@ -12,18 +12,18 @@ class QuestionsController < ApplicationController
 
   def solved
     questions = if !!params[:words]
-                  Question.where(is_solved: true).where('title LIKE ?', "%#{params[:words]}%").order(created_at: 'desc')
+                  Question.where(solved: true).where('title LIKE ?', "%#{params[:words]}%").order(created_at: 'desc')
                 else
-                  Question.where(is_solved: true).order(created_at: 'desc')
+                  Question.where(solved: true).order(created_at: 'desc')
                 end
     @questions = questions.page(params[:page]).per(10)
   end
 
   def unsolved
     questions = if !!params[:words]
-                  Question.where(is_solved: false).where('title LIKE ?', "%#{params[:words]}%").order(created_at: 'desc')
+                  Question.where(solved: false).where('title LIKE ?', "%#{params[:words]}%").order(created_at: 'desc')
                 else
-                  Question.where(is_solved: false).order(created_at: 'desc')
+                  Question.where(solved: false).order(created_at: 'desc')
                 end
     @questions = questions.page(params[:page]).per(10)
   end
@@ -50,7 +50,8 @@ class QuestionsController < ApplicationController
       flash[:success] = '質問を作成しました'
       users = User.all_others(current_user.id)
       users.each do |user|
-        NotificationMailer.notification_of_getting_question(user, question).deliver_later
+        NotificationMailer.notification_of_getting_question(user, question).deliver_now
+        puts ActionMailer::Base.deliveries.size
       end
       redirect_to question_path(question.id)
     else
@@ -79,7 +80,7 @@ class QuestionsController < ApplicationController
     if question
       if current_user == question.user
         if question.update!(question_params)
-          flash[:success] = '質問を編集しました'
+          flash[:success] = '質問を更新しました'
           redirect_to question_path(question.id)
         else
           flash.now[:danger] = '質問を編集できませんでした'
@@ -119,6 +120,6 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :content)
+    params.require(:question).permit(:title, :body)
   end
 end

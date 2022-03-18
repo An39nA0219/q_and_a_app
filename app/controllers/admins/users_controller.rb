@@ -8,7 +8,7 @@ class Admins::UsersController < ApplicationController
   def destroy
     user = User.find_by(id: params[:id])
     if user
-      if !user.is_admin
+      if !user.admin
         user.answers.destroy_all
         user.questions.destroy_all
         user.image.purge

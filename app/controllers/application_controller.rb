@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_admin_logged_in
-    unless logged_in? && current_user.is_admin && is_for_admin?
+    unless logged_in? && current_user.admin && is_for_admin?
       redirect_to login_url
     end
   end

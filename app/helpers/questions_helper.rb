@@ -1,9 +1,9 @@
 module QuestionsHelper
-  def content_sumnail(content)
-    if content.length > 100
-      "#{content[..99]}..."
+  def body_sumnail(body)
+    if body.length > 100
+      "#{body[..99]}..."
     else
-      content
+      body
     end
   end
 end

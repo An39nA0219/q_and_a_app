@@ -1,4 +1,4 @@
-<div class="card" style="width: 100%">
+<div id="question-area" class="card" style="width: 100%">
   <div class="card-body flex">
     <div class="left-part">  
       <div class="icon-area">          
@@ -10,7 +10,7 @@
       </div>
       <div style="text-align: center">
         <%= question.user.name %>
-        <br>
+        <br />
         <%= question.created_at.to_s(:db) %>
       </div>
     </div>
@@ -25,13 +25,13 @@
               <% if !!show_path %>
                 <%= link_to question.title, show_path %>
               <% else %>
-                question.title
+                <%= question.title %>
               <% end %>
             </h4>
-            <%= content_sumnail(question.content) %>
+            <%= body_sumnail(question.body) %>
           </div>
         </div>
-        <div style="width: 20%;">
+        <div style="width: 20%">
           <% if is_for_admin? %>
             <div style="display: flex">
               <%= render 'layouts/question_delete_button', question: question %>

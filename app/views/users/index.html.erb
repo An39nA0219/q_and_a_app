@@ -1,33 +1,30 @@
 <% if logged_in? %>
-  <div class="wrapper">
-    <h1>ユーザー一覧</h1>
+<div class="wrapper">
+  <h1>ユーザー一覧</h1>
 
-    <table class="table table-border" style="text-align: center;">
-      <tr>
-        <th></th>
-        <th>名前</th>
-        <th>メールアドレス</th>
-        <th>管理者権限</th>
-      </tr>
-      <% @users.each do |user| %>
-        <tr>
-          <td class="align-middle">
-            <% if user.image.attached? %>
-              <%= image_tag user.image, class: "icon" %>
-            <% else %>
-              <%= image_tag 'default_user.png', class: "icon" %>
-            <% end %>
-          </td>
-          <td class="align-middle"><%= user.name %></td>
-          <td class="align-middle"><%= user.email %></td>
-          <td class="align-middle">
-            <% if user.is_admin %>
-              <i class="fa-solid fa-circle-check fa-lg"></i>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </table>
-    <%= render 'layouts/paginate', contents: @users %>
-  </div>
+  <table class="table table-border" style="text-align: center">
+    <tr>
+      <th></th>
+      <th>名前</th>
+      <th>メールアドレス</th>
+      <th>管理者権限</th>
+    </tr>
+    <% @users.each do |user| %>
+    <tr>
+      <td class="align-middle">
+        <% if user.image.attached? %> <%= image_tag user.image, class: "icon" %>
+        <% else %> <%= image_tag 'default_user.png', class: "icon" %> <% end %>
+      </td>
+      <td class="align-middle"><%= user.name %></td>
+      <td class="align-middle"><%= user.email %></td>
+      <td class="align-middle">
+        <% if user.admin %>
+        <i class="fa-solid fa-circle-check fa-lg"></i>
+        <% end %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+  <%= render 'layouts/paginate', contents: @users %>
+</div>
 <% end %>

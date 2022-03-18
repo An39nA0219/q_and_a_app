@@ -5,7 +5,7 @@ class QuestionStatusesController < ApplicationController
     question = Question.find_by(id: params[:id])
     if question
       if current_user == question.user
-        question.is_solved = true
+        question.solved = true
         if question.save!
           flash[:success] = '解決済みにしました'
         else
@@ -25,7 +25,7 @@ class QuestionStatusesController < ApplicationController
     question = Question.find_by(id: params[:id])
     if question
       if current_user == question.user
-        question.is_solved = false
+        question.solved = false
         if question.save!
           flash[:success] = '質問を未解決にしました'
         else

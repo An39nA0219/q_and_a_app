@@ -1,7 +1,7 @@
-<div class="card" style="width: 100%">
+<div id="answer_<%= answer.id %>" class="card" style="width: 100%">
   <div class="card-body flex">
-    <div class="left-part">  
-      <div class="icon-area">          
+    <div class="left-part">
+      <div class="icon-area">
         <% if answer.answerer.image.attached? %>
           <%= image_tag answer.answerer.image, class: "icon" %>
         <% else %>
@@ -10,14 +10,12 @@
       </div>
       <div style="text-align: center">
         <%= answer.answerer.name %>
-        <br>
+        <br />
         <%= answer.created_at.to_s(:db) %>
       </div>
     </div>
-    <div class="right-part" style="display: flex; width :100%;">
-      <div style="width: 80%">
-        <%= answer.content %>
-      </div>
+    <div class="right-part" style="display: flex; width: 100%">
+      <div style="width: 80%"><%= answer.content %></div>
       <div>
         <% if is_for_admin? %>
           <%= button_to '削除', admins_answer_path(answer.id), method: :delete, class: "btn btn-danger button" %>

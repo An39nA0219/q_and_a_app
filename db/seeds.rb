@@ -8,4 +8,3 @@
 
 
 #  credentialするとmaster_keyとかが厄介なので平文にしておきます。
-User.create(name: "admin", email: "admin@xxxx.co.jp", password: "admin", is_admin: true)

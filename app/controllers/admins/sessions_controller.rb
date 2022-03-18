@@ -8,7 +8,7 @@ class Admins::SessionsController < ApplicationController
     email = session_params[:email].downcase
     password = session_params[:password]
     user = User.find_by(email: email)
-    if user && user&.authenticate(password) && user.is_admin
+    if user && user&.authenticate(password) && user.admin
       session[:user_id] = user.id
       session[:is_for_admin] = true
       flash[:success] = 'ログインしました'
