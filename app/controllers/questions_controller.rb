@@ -47,7 +47,7 @@ class QuestionsController < ApplicationController
   def create
     question = current_user.questions.build(question_params)
     if current_user.save!
-      flash[:success] = '質問を投稿しました'
+      flash[:success] = '質問を作成しました'
       users = User.all_others(current_user.id)
       users.each do |user|
         NotificationMailer.notification_of_getting_question(user, question).deliver_later

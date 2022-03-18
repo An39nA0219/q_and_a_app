@@ -15,7 +15,7 @@
           <li class="nav-item"><%= link_to 'ユーザー一覧', admins_users_path, class: 'nav-link' %></li>
           <li class="nav-item"><%= button_to 'ログアウト', admins_logout_path, method: :delete, class: 'nav-link button-to-ink' %></li>
         <% elsif logged_in? && !is_for_admin? %>
-          <li class="nav-item"><%= link_to '質問を投稿', new_question_path, class: 'nav-link' %></li>
+          <li class="nav-item"><%= link_to '質問作成', new_question_path, class: 'nav-link' %></li>
           <li class="nav-item"><%= link_to 'ユーザー一覧', users_path, class: 'nav-link' %></li>
           <li class="nav-item"><%= link_to "#{current_user.name}さん マイページ", user_path(current_user.id), class: 'nav-link' %></li>
           <li class="nav-item"><%= button_to 'ログアウト', logout_path, method: :delete, class: 'nav-link button-to-ink' %></li>

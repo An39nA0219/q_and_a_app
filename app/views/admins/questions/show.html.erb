@@ -1,11 +1,13 @@
-<div class="wrapper">
-  <div class="container">
-    <%= render 'layouts/question', question: @question, show_path: nil %>
+<% if logged_in? && is_for_admin? %> 
+ <div class="wrapper">
+    <div class="container">
+      <%= render 'layouts/question', question: @question, show_path: nil %>
+    </div>
+    <div class="container">
+      <h3>回答一覧</h3>
+      <% @answers.each do |answer| %>
+        <%= render 'layouts/answer', answer: answer %>
+      <% end %>
+    </div>
   </div>
-  <div class="container">
-    <h3>回答一覧</h3>
-    <% @answers.each do |answer| %>
-      <%= render 'layouts/answer', answer: answer %>
-    <% end %>
-  </div>
-</div>
+<% end %>

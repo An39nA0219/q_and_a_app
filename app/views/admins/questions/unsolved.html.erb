@@ -1,11 +1,13 @@
-<div class="wrapper">
-  <div class="container">
-    <%= render 'layouts/admins_tabs', active: 'all' %>
-    <%= render 'layouts/search_field', url: '/admins/questions/unsolved' %>
-    
-    <% @questions.each do |question|%>
-      <%= render 'layouts/question', question: question, show_path: admins_question_path(question.id) %>
-    <% end %>
-    <%= render 'layouts/paginate', contents: @questions %>
+<% if logged_in? && is_for_admin? %>
+  <div class="wrapper">
+    <div class="container">
+      <%= render 'layouts/admins_tabs', active: 'all' %>
+      <%= render 'layouts/search_field', url: '/admins/questions/unsolved' %>
+      
+      <% @questions.each do |question|%>
+        <%= render 'layouts/question', question: question, show_path: admins_question_path(question.id) %>
+      <% end %>
+      <%= render 'layouts/paginate', contents: @questions %>
+    </div>
   </div>
-</div>
+<% end %>

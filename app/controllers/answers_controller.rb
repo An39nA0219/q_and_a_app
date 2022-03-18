@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
     if question
       answer = current_user.answers.build(answer_params)
       question.answers << answer
-      flash[:success] = '回答を投稿しました'
+      flash[:success] = '回答しました'
       users = User.all_other_answerers_with_questioner(current_user.id, question)
       users.each do |user|
         NotificationMailer.notification_of_getting_answer(user, answer).deliver_later

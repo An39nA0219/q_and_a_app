@@ -7,7 +7,7 @@ class QuestionStatusesController < ApplicationController
       if current_user == question.user
         question.is_solved = true
         if question.save!
-          flash[:success] = '質問を解決済みにしました'
+          flash[:success] = '解決済みにしました'
         else
           flash[:danger] = '質問を解決済みにできませんでした'
         end

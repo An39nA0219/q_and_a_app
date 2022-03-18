@@ -7,6 +7,7 @@
       <h3>回答する</h3>
       <%= form_with url: answers_path, data: { turbo: false } do |f| %>
         <div class="form-group">
+          <%= f.label :content, '回答内容' %>
           <%= f.text_area :content, rows: 5, class: 'form-control' %>
         </div>
         <%= f.hidden_field :question_id, value: @question.id %>
