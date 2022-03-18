@@ -14,7 +14,7 @@ class AnswersController < ApplicationController
       redirect_to question_path(question.id)
     else
       flash[:danger] = '質問が見つかりませんでした'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 
@@ -34,7 +34,7 @@ class AnswersController < ApplicationController
       redirect_to question_path(question_id)
     else
       flash[:danger] = '回答が見つかりませんでした'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 

@@ -17,8 +17,8 @@ class UsersController < ApplicationController
     user = User.new(user_params)
     if user.save!
       user.image.attach(user_params[:image]) if user_params[:image]
-      flash[:success] = 'アカウントを作成しました'
-      redirect_to login_path
+      flash[:success] = 'サインアップが完了しました'
+      redirect_to questions_path
     else
       flash.now[:danger] = 'アカウントを作成できませんでした'
       render :new
@@ -32,11 +32,11 @@ class UsersController < ApplicationController
         @user = user
       else
         flash[:danger] = 'アカウントの編集権限がありません'
-        redirect_to root_path
+        redirect_to questions_path
       end
     else
         flash[:danger] = 'アカウントが見つかりませんでした'
-        redirect_to root_path
+        redirect_to questions_path
     end
   end
 
@@ -47,18 +47,18 @@ class UsersController < ApplicationController
         if user.update!(user_edit_params)
           user.image.attach(user_params[:image]) if user_params[:image]
           flash[:success] = 'アカウントを編集しました'
-          redirect_to root_path
+          redirect_to questions_path
         else
           flash.now[:danger] = 'アカウントの編集ができませんでした'
           render :edit
         end
       else
         flash[:danger] = 'アカウントの編集権限がありません'
-        redirect_to root_path
+        redirect_to questions_path
       end
     else
       flash[:danger] = 'アカウントが見つかりませんでした'
-      redirect_to root_path
+      redirect_to questions_path
     end
   end
 

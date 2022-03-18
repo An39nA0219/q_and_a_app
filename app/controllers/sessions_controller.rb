@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       session[:is_for_admin] = false
       flash[:success] = "ログインしました"
-      redirect_to root_path
+      redirect_to questions_path
     else
       flash.now[:danger] = "ログインできませんでした"
       render :new
