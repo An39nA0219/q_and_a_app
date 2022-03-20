@@ -2,16 +2,15 @@
   <h1>管理者ログイン</h1>
 
   <div class="container">
-    <%= form_with url: admins_login_path, scope: :session, local: true, data: { turbo: false } do |f| %>
-      <div class="form-group">
-        <%= f.label :email, 'メールアドレス' %>
-        <%= f.email_field :email, class: 'form-control' %>
-      </div>
-      <div class="form-group">
-        <%= f.label :password, 'パスワード' %>
-        <%= f.password_field :password, class: 'form-control' %>
-      </div>
-      <%= f.submit 'ログイン', class: 'btn btn-primary btn-block' %>
-    <% end %>
+    <%= form_with url: admins_login_path, scope: :session, local: true do |f| %>
+    <div class="form-group">
+      <%= f.label :email, 'メールアドレス' %> <%= f.email_field :email, class:
+      'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :password, 'パスワード' %> <%= f.password_field :password,
+      class: 'form-control' %>
+    </div>
+    <%= f.submit 'ログイン', class: 'btn btn-primary btn-block' %> <% end %>
   </div>
 </div>

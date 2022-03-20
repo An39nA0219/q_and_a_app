@@ -50,8 +50,7 @@ class QuestionsController < ApplicationController
       flash[:success] = '質問を作成しました'
       users = User.all_others(current_user.id)
       users.each do |user|
-        NotificationMailer.notification_of_getting_question(user, question).deliver_now
-        puts ActionMailer::Base.deliveries.size
+        NotificationMailer.notification_of_getting_question(user, question).deliver_later
       end
       redirect_to question_path(question.id)
     else

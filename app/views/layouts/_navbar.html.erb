@@ -3,7 +3,7 @@
     <% if logged_in? && current_user.admin && is_for_admin? %>
     <a class="navbar-brand" href="/admins/questions">Q&A for Admin</a>
     <% else %>
-    <a class="navbar-brand" href="/">Q&A</a>
+    <a class="navbar-brand" href="/questions">Q&A</a>
     <% end %>
     <button
       class="navbar-toggler"

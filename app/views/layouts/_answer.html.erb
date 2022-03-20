@@ -18,9 +18,9 @@
       <div style="width: 80%"><%= answer.content %></div>
       <div>
         <% if is_for_admin? %>
-          <%= button_to '削除', admins_answer_path(answer.id), method: :delete, class: "btn btn-danger button" %>
+          <%= button_to '削除', admins_answer_path(answer.id), method: :delete, data: { confirm: "削除しますか？" }, class: "btn btn-danger button" %>
         <% elsif !is_for_admin? && current_user == answer.answerer %>
-          <%= button_to '削除', answer_path(answer.id), method: :delete, class: "btn btn-danger button" %>
+          <%= button_to '削除', answer_path(answer.id), method: :delete, data: { confirm: "削除しますか？" }, class: "btn btn-danger button" %>
         <% end %>
       </div>
     </div>

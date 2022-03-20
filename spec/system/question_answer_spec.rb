@@ -45,15 +45,13 @@ RSpec.describe '質問から回答までの一連の流れ', type: :system do
       answer = Answer.last
       within "#answer_#{answer.id}" do
         expect(page).to have_content 'Railsガイドを見ましょう'
-        click_on '削除'
-        # page.accept_confirm { click_on '削除' }
+        page.accept_confirm { click_on '削除' }
       end
       expect(page).to have_content '回答を削除しました'
       expect(page).not_to have_content 'Railsガイドを見ましょう'
 
       within '#question-area' do
-        click_on '解決済みにする'
-        # page.accept_confirm { click_on '解決済みにする' }
+        page.accept_confirm { click_on '解決済みにする' }
         expect(page).to have_content '解決済み'
       end
       expect(page).to have_content '解決済みにしました'

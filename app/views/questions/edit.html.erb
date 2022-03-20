@@ -1,6 +1,6 @@
 <% if logged_in? %>
 <div class="container">
-  <%= form_with model: @question, data: { turbo: false } do |f| %>
+  <%= form_with model: @question do |f| %>
   <div class="form-group">
     <%= f.label :title, 'タイトル' %> <%= f.text_field :title, class:
     'form-control' %>

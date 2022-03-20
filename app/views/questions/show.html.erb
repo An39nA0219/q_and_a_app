@@ -5,7 +5,7 @@
   <div class="container"">
     <% if logged_in? %>
       <h3>回答する</h3>
-      <%= form_with url: answers_path, data: { turbo: false } do |f| %>
+      <%= form_with url: answers_path do |f| %>
         <div class="form-group">
           <%= f.label :content, '回答内容' %>
           <%= f.text_area :content, rows: 5, class: 'form-control' %>
