@@ -18,8 +18,8 @@ Routing の table がきれいに表示出来てない
   - solved
 - answers
   - question_id
-  - answerer_id
-  - content
+  - user_id
+  - body
 
 # Routing
 

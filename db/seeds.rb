@@ -7,4 +7,7 @@
 #   Character.create(name: "Luke", movie: movies.first)
 
 
-#  credentialするとmaster_keyとかが厄介なので平文にしておきます。
+User.create!(
+  email: 'test@example.com',
+  passowd: 'password'
+)

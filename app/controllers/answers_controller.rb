@@ -7,7 +7,7 @@ class AnswersController < ApplicationController
       answer = current_user.answers.build(answer_params)
       question.answers << answer
       flash[:success] = '回答しました'
-      users = User.all_other_answerers_with_questioner(current_user.id, question)
+      users = User.all_other_users_with_questioner(current_user.id, question)
       users.each do |user|
         NotificationMailer.notification_of_getting_answer(user, answer).deliver_later
       end
@@ -22,7 +22,7 @@ class AnswersController < ApplicationController
     answer = Answer.find_by(id: params[:id])
     if answer
       question_id = answer.question_id
-      if current_user == answer.answerer
+      if current_user == answer.user
         if answer.destroy!
           flash[:success] = '回答を削除しました'
         else
@@ -41,6 +41,6 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.permit(:content)
+    params.permit(:body)
   end
 end

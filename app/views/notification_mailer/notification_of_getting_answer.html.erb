@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
   </head>
   <body>
     <h1><%= @user.name %>さん、新しい回答が追加されました！</h1>
     <p>
-      回答が追加されました。<br>
-      ===============<br>
-      質問者　　<%= @answer.question.user.name %><br>
-      タイトル　<%= @answer.question.title %><br>
-      <br>
-      質問者　　<%= @answer.answerer.name %><br>
-      内容　　　<%= @answer.content %><br>
-      ===============<br>
+      回答が追加されました。<br />
+      ===============<br />
+      質問者　　<%= @answer.question.user.name %><br />
+      タイトル　<%= @answer.question.title %><br />
+      <br />
+      質問者　　<%= @answer.user.name %><br />
+      内容　　　<%= @answer.body %><br />
+      ===============<br />
     </p>
-    <p>
-      このサイトにログインして回答してください。
-    </p>
+    <p>このサイトにログインして回答してください。</p>
   </body>
 </html>
