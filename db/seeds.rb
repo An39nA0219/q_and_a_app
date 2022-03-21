@@ -8,6 +8,8 @@
 
 
 User.create!(
+  name: 'test_user',
   email: 'test@example.com',
-  passowd: 'password'
+  passowd: 'password',
+  admin: true
 )
