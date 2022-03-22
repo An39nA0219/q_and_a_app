@@ -7,7 +7,7 @@ Q&A アプリです
 - users
   - name
   - email
-  - password
+  - password_digest
   - admin
 - questions
   - user_id
