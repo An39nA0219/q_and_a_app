@@ -1,15 +1,13 @@
 # README
 
 Q&A アプリです
-全体的に　 logged*in? is_for_admin*でカバーする
-Routing の table がきれいに表示出来てない
 
 # DB 設計
 
 - users
   - name
   - email
-  - password
+  - password_digest
   - admin
 - questions
   - user_id
