@@ -22,7 +22,7 @@
               <%= render 'layouts/question_status_badge', question: question %>
             </div>
             <h4>
-              <% if !!show_path %>
+              <% if show_path.present? %>
                 <%= link_to question.title, show_path %>
               <% else %>
                 <%= question.title %>

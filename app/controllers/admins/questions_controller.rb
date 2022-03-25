@@ -2,7 +2,7 @@ class Admins::QuestionsController < ApplicationController
   before_action :require_admin_logged_in
 
   def index
-    questions = if !!params[:words]
+    questions = if params[:words].present?
                   Question.where('title LIKE ?', "%#{params[:words]}%").order(created_at: :desc)
                 else
                   Question.all.order(created_at: :desc)
@@ -11,7 +11,7 @@ class Admins::QuestionsController < ApplicationController
   end
 
   def solved
-    questions = if !!params[:words]
+    questions = if params[:words].present?
                   Question.where(solved: true).where('title LIKE ?', "%#{params[:words]}%").order(created_at: :desc)
                 else
                   Question.where(solved: true).order(created_at: :desc)
@@ -20,7 +20,7 @@ class Admins::QuestionsController < ApplicationController
   end
 
   def unsolved
-    questions = if !!params[:words]
+    questions = if params[:words].present?
                   Question.where(solved: false).where('title LIKE ?', "%#{params[:words]}%").order(created_at: :desc)
                 else
                   Question.where(solved: false).order(created_at: :desc)
