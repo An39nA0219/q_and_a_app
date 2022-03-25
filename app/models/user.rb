@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :password_digest, presence: true
 
   has_many :questions
-  has_many :answers, foreign_key: :user_id
+  has_many :answers
   has_one_attached :image
 
   scope :all_others, ->(user_id) { where.not(id: user_id) }
