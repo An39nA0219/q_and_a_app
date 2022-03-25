@@ -29,15 +29,10 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    question = Question.find_by(id: params[:id])
-    if question
-      @question = question
-      @answer = Answer.new
-      @answers = Answer.where(question_id: params[:id])
-    else
-      flash[:danger] = '質問が見つかりませんでした'
-      redirect_to questions_path
-    end
+    question = Question.find(id: params[:id])
+    @question = question
+    @answer = Answer.new
+    @answers = Answer.where(question_id: params[:id])
   end
 
   def new
@@ -46,73 +41,46 @@ class QuestionsController < ApplicationController
 
   def create
     question = current_user.questions.build(question_params)
-    if current_user.save!
-      flash[:success] = '質問を作成しました'
-      users = User.all_others(current_user.id)
-      users.each do |user|
-        NotificationMailer.notification_of_getting_question(user, question).deliver_later
-      end
-      redirect_to question_path(question.id)
-    else
-      flash.now[:danger] = '質問を投稿できませんでした'
-      render :new
+    current_user.save!
+    flash[:success] = '質問を作成しました'
+    users = User.all_others(current_user.id)
+    users.each do |user|
+      NotificationMailer.notification_of_getting_question(user, question).deliver_later
     end
+    redirect_to question_path(question.id)
   end
 
   def edit
-    question = Question.find_by(id: params[:id])
-    if question
-      if current_user == question.user
-        @question = question
-      else
-        flash[:danger] = '質問の編集権限がありません'
-        redirect_to question_path(question.id)
-      end
+    question = Question.find(id: params[:id])
+    if current_user == question.user
+      @question = question
     else
-      flash[:danger] = '質問が見つかりませんでした'
-      redirect_to questions_path
+      flash[:danger] = '質問の編集権限がありません'
+      redirect_to question_path(question.id)
     end
   end
 
   def update
-    question = Question.find_by(id: params[:id])
-    if question
-      if current_user == question.user
-        if question.update!(question_params)
-          flash[:success] = '質問を更新しました'
-          redirect_to question_path(question.id)
-        else
-          flash.now[:danger] = '質問を編集できませんでした'
-          render :edit
-        end
-      else
-        flash[:danger] = '質問の編集権限がありません'
-        redirect_to question_path(question.id)
-      end
+    question = Question.find(id: params[:id])
+    if current_user == question.user
+      question.update!(question_params)
+      flash[:success] = '質問を更新しました'
+      redirect_to question_path(question.id)
     else
-      flash[:danger] = '質問が見つかりませんでした'
-      redirect_to questions_path
+      flash[:danger] = '質問の編集権限がありません'
+      redirect_to question_path(question.id)
     end
   end
 
   def destroy
-    question = Question.find_by(id: params[:id])
-    if question
-      if current_user == question.user
-        if question.answers.destroy_all && question.destroy!
-          flash[:success] = '質問を削除しました'
-          redirect_to questions_path
-        else
-          flash[:danger] = '質問を削除できませんでした'
-          redirect_to question_path(question.id)
-        end
-      else
-        flash[:danger] = '質問の削除権限がありません'
-        redirect_to question_path(question.id)
-      end
-    else
-      flash[:danger] = '質問が見つかりませんでした'
+    question = Question.find(id: params[:id])
+    if current_user == question.user
+      question.answers.destroy_all && question.destroy!
+      flash[:success] = '質問を削除しました'
       redirect_to questions_path
+    else
+      flash[:danger] = '質問の削除権限がありません'
+      redirect_to question_path(question.id)
     end
   end
 

@@ -7,8 +7,8 @@ class SessionsController < ApplicationController
   def create
     email = session_params[:email].downcase
     password = session_params[:password]
-    user = User.find_by(email: email)
-    if user && user&.authenticate(password)
+    user = User.find(email: email)
+    if user&.authenticate(password)
       session[:user_id] = user.id
       session[:is_for_admin] = false
       flash[:success] = "ログインしました"

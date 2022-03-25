@@ -15,49 +15,31 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if user.save!
-      user.image.attach(user_params[:image]) if user_params[:image]
-      flash[:success] = 'サインアップが完了しました'
-      redirect_to questions_path
-    else
-      flash.now[:danger] = 'アカウントを作成できませんでした'
-      render :new
-    end
+    user.save!
+    user.image.attach(user_params[:image]) if user_params[:image]
+    flash[:success] = 'サインアップが完了しました'
+    redirect_to questions_path
   end
 
   def edit
-    user = User.find_by(id: params[:id])
-    if user
-      if current_user == user
-        @user = user
-      else
-        flash[:danger] = 'アカウントの編集権限がありません'
-        redirect_to questions_path
-      end
+    user = User.find(id: params[:id])
+    if current_user == user
+      @user = user
     else
-        flash[:danger] = 'アカウントが見つかりませんでした'
-        redirect_to questions_path
+      flash[:danger] = 'アカウントの編集権限がありません'
+      redirect_to questions_path
     end
   end
 
   def update
-    user = User.find_by(id: params[:id])
-    if user
-      if current_user == user
-        if user.update!(user_edit_params)
-          user.image.attach(user_params[:image]) if user_params[:image]
-          flash[:success] = 'アカウントを編集しました'
-          redirect_to questions_path
-        else
-          flash.now[:danger] = 'アカウントの編集ができませんでした'
-          render :edit
-        end
-      else
-        flash[:danger] = 'アカウントの編集権限がありません'
-        redirect_to questions_path
-      end
+    user = User.find(id: params[:id])
+    if current_user == user
+      user.update!(user_edit_params)
+      user.image.attach(user_params[:image]) if user_params[:image]
+      flash[:success] = 'アカウントを編集しました'
+      redirect_to questions_path
     else
-      flash[:danger] = 'アカウントが見つかりませんでした'
+      flash[:danger] = 'アカウントの編集権限がありません'
       redirect_to questions_path
     end
   end

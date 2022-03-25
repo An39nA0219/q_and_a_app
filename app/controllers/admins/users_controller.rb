@@ -6,22 +6,16 @@ class Admins::UsersController < ApplicationController
   end
 
   def destroy
-    user = User.find_by(id: params[:id])
-    if user
-      if !user.admin
-        user.answers.destroy_all
-        user.questions.destroy_all
-        user.image.purge
-        if user.destroy!
-          flash[:success] = 'アカウントを削除しました'
-          redirect_to admins_users_path
-        end
-      else
-        flash[:danger] = '管理者アカウントは削除できません'
-        redirect_to admins_users_path
-      end
+    user = User.find(id: params[:id])
+    if !user.admin
+      user.answers.destroy_all
+      user.questions.destroy_all
+      user.image.purge
+      user.destroy!
+      flash[:success] = 'アカウントを削除しました'
+      redirect_to admins_users_path
     else
-      flash[:danger] = 'アカウントが見つかりませんでした'
+      flash[:danger] = '管理者アカウントは削除できません'
       redirect_to admins_users_path
     end
   end
