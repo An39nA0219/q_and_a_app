@@ -29,7 +29,7 @@ class Admins::QuestionsController < ApplicationController
   end
 
   def show
-    question = Question.find_by(id: params[:id])
+    question = Question.find(id: params[:id])
     if question
       @question = question
       @answers = Answer.where(question_id: params[:id])
