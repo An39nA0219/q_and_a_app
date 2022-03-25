@@ -2,7 +2,7 @@ class Admins::AnswersController < ApplicationController
   before_action :require_admin_logged_in
 
   def destroy
-    answer = Answer.find_by(id: params[:id])
+    answer = Answer.find(id: params[:id])
     if answer
       question_id = answer.question_id
       if answer.destroy!
