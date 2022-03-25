@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   def create
     question = Question.find(id: params[:question_id])
     answer = current_user.answers.build(answer_params)
-    question.answers << answer
+    answer.save!
     flash[:success] = '回答しました'
     users = User.all_other_users_with_questioner(current_user.id, question)
     users.each do |user|
