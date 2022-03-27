@@ -1,5 +1,4 @@
-class Admins::UsersController < ApplicationController
-  before_action :require_admin_logged_in
+class Admins::UsersController < Admins::BaseController
 
   def index
     @users = User.all.order(created_at: 'asc').page(params[:page]).per(10)

@@ -1,5 +1,4 @@
-class Admins::AnswersController < ApplicationController
-  before_action :require_admin_logged_in
+class Admins::AnswersController < Admins::BaseController
 
   def destroy
     answer = Answer.find(id: params[:id])

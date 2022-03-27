@@ -1,5 +1,4 @@
-class Admins::QuestionsController < ApplicationController
-  before_action :require_admin_logged_in
+class Admins::QuestionsController < Admins::BaseController
 
   def index
     questions = if params[:words].present?
