@@ -21,7 +21,7 @@ class Admins::SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    session[:is_for_amin] = nil
+    session[:is_for_admin] = nil
     flash[:success] = 'ログアウトしました'
     redirect_to admins_login_path
   end
