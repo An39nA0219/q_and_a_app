@@ -5,4 +5,8 @@ class Question < ApplicationRecord
   belongs_to :user
   
   has_many :answers
+
+  scope :title_like_search, ->(param) {
+    where('title LIKE ?', "%#{params}%").order(created_at: :desc)
+  }
 end

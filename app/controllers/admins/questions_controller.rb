@@ -2,7 +2,7 @@ class Admins::QuestionsController < Admins::BaseController
 
   def index
     questions = if params[:words].present?
-                  Question.where('title LIKE ?', "%#{params[:words]}%").order(created_at: :desc)
+                  Question.title_like_search(params[:words])
                 else
                   Question.all.order(created_at: :desc)
                 end
@@ -11,7 +11,7 @@ class Admins::QuestionsController < Admins::BaseController
 
   def solved
     questions = if params[:words].present?
-                  Question.where(solved: true).where('title LIKE ?', "%#{params[:words]}%").order(created_at: :desc)
+                  Question.where(solved: true).title_like_search(params[:words])
                 else
                   Question.where(solved: true).order(created_at: :desc)
                 end
@@ -20,7 +20,7 @@ class Admins::QuestionsController < Admins::BaseController
 
   def unsolved
     questions = if params[:words].present?
-                  Question.where(solved: false).where('title LIKE ?', "%#{params[:words]}%").order(created_at: :desc)
+                  Question.where(solved: false).title_like_search(params[:words])
                 else
                   Question.where(solved: false).order(created_at: :desc)
                 end
