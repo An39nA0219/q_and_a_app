@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_secure_password
   before_save { email.downcase! }
+  before_create :default_image
   validates :name, presence: true
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
@@ -19,4 +20,10 @@ class User < ApplicationRecord
     target_ids = user_ids << questioner_id
     where(id: target_ids).all_others(user_id)
   }
+
+  def default_image
+    if !self.image.attached?
+      self.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'default_user.png')), filename: 'default_user.png', content_type: 'image/png')
+    end
+  end
 end

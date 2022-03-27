@@ -18,11 +18,7 @@
         <tr>
           <td>アバター</td>
           <td>
-            <% if @user.image.attached? %>
-              <%= image_tag @user.image, class: "icon" %>
-            <% else %>
-              <%= image_tag 'default_user.png', class: "icon" %>
-            <% end %>
+            <%= image_tag @user.image, class: "icon" %>
           </td>
         </tr>
       </table>

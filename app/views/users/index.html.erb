@@ -12,8 +12,7 @@
     <% @users.each do |user| %>
     <tr>
       <td class="align-middle">
-        <% if user.image.attached? %> <%= image_tag user.image, class: "icon" %>
-        <% else %> <%= image_tag 'default_user.png', class: "icon" %> <% end %>
+        <%= image_tag user.image, class: "icon" %>
       </td>
       <td class="align-middle"><%= user.name %></td>
       <td class="align-middle"><%= user.email %></td>

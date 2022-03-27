@@ -2,9 +2,7 @@
   <div class="card-body flex">
     <div class="left-part">
       <div class="icon-area">
-        <% if answer.user.image.attached? %> <%= image_tag answer.user.image,
-        class: "icon" %> <% else %> <%= image_tag 'default_user.png', class:
-        "icon" %> <% end %>
+        <%= image_tag answer.user.image, class: "icon" %> 
       </div>
       <div style="text-align: center">
         <%= answer.user.name %>
