@@ -28,7 +28,7 @@
                 <%= question.title %>
               <% end %>
             </h4>
-            <%= body_sumnail(question.body) %>
+            <%= question.body.truncate(100) %>
           </div>
         </div>
         <div style="width: 20%">
