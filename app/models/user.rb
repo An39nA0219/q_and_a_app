@@ -15,12 +15,8 @@ class User < ApplicationRecord
 
   scope :all_others, ->(user_id) { where.not(id: user_id) }
 
-  scope :all_other_users_with_questioner, ->(user_id, question) {
-    user_ids = question.answers.map{ |a| a.user.id }
-    questioner_id = question.user.id
-    target_ids = user_ids << questioner_id
-    where(id: target_ids).all_others(user_id)
-  }
+  scope :all_other_users_with_questioner, ->(user_id, question) { where.not(id: user_id).joins(:answers).where(answers: { question_id: question.id }) }
+  
   scope :all_other_users_with_questioner, ->(user_id, question) { 
     where.not(id: user_id).joins(:answers).where(answers: { question_id: question.id }) 
   }
