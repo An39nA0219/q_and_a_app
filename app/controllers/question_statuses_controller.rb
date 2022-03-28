@@ -2,7 +2,7 @@ class QuestionStatusesController < ApplicationController
   before_action :require_user_logged_in
 
   def create
-    question = Question.find(id: params[:id])
+    question = Question.find(params[:id])
     if current_user == question.user
       question.solved = true
       question.save!
@@ -13,7 +13,7 @@ class QuestionStatusesController < ApplicationController
   end
 
   def destroy
-    question = Question.find(id: params[:id])
+    question = Question.find(params[:id])
     if current_user == question.user
       question.solved = false
       question.save!

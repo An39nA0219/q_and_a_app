@@ -20,6 +20,9 @@ class User < ApplicationRecord
     target_ids = user_ids << questioner_id
     where(id: target_ids).all_others(user_id)
   }
+  scope :all_other_users_with_questioner, ->(user_id, question) { 
+    where.not(id: user_id).joins(:answers).where(answers: { question_id: question.id }) 
+  }
 
   def default_image
     if !self.image.attached?

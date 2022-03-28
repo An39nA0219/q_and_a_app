@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    question = Question.find(id: params[:id])
+    question = Question.find(params[:id])
     @question = question
     @answer = Answer.new
     @answers = Answer.where(question_id: params[:id])
@@ -51,7 +51,7 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    question = Question.find(id: params[:id])
+    question = Question.find(params[:id])
     if current_user == question.user
       @question = question
     else
@@ -61,7 +61,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    question = Question.find(id: params[:id])
+    question = Question.find(params[:id])
     if current_user == question.user
       question.update!(question_params)
       flash[:success] = '質問を更新しました'
@@ -73,7 +73,7 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    question = Question.find(id: params[:id])
+    question = Question.find(params[:id])
     if current_user == question.user
       question.answers.destroy_all && question.destroy!
       flash[:success] = '質問を削除しました'

@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    user = User.find(id: params[:id])
+    user = User.find(params[:id])
     if current_user == user
       @user = user
     else
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = User.find(id: params[:id])
+    user = User.find(params[:id])
     if current_user == user
       user.update!(user_edit_params)
       user.image.attach(user_params[:image]) if user_params[:image]

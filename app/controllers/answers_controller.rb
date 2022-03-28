@@ -2,7 +2,7 @@ class AnswersController < ApplicationController
   before_action :require_user_logged_in
 
   def create
-    question = Question.find(id: params[:question_id])
+    question = Question.find(params[:question_id])
     answer = current_user.answers.build(answer_params)
     answer.save!
     flash[:success] = '回答しました'
@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    answer = Answer.find(id: params[:id])
+    answer = Answer.find(params[:id])
     question_id = answer.question_id
     if current_user == answer.user
       answer.destroy!

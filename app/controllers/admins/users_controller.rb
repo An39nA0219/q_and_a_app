@@ -5,7 +5,7 @@ class Admins::UsersController < Admins::BaseController
   end
 
   def destroy
-    user = User.find(id: params[:id])
+    user = User.find(params[:id])
     if !user.admin
       user.answers.destroy_all
       user.questions.destroy_all

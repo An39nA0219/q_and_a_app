@@ -28,13 +28,13 @@ class Admins::QuestionsController < Admins::BaseController
   end
 
   def show
-    question = Question.find(id: params[:id])
+    question = Question.find(params[:id])
     @question = question
     @answers = Answer.where(question_id: params[:id])
   end
 
   def destroy
-    question = Question.find(id: params[:id])
+    question = Question.find(params[:id])
     question.answers.destroy_all && question.destroy!
     flash[:success] = '質問を削除しました'
     redirect_to admins_questions_path
