@@ -35,7 +35,7 @@ class Admins::QuestionsController < Admins::BaseController
 
   def destroy
     question = Question.find(params[:id])
-    question.answers.destroy_all && question.destroy!
+    question.destroy!
     flash[:success] = '質問を削除しました'
     redirect_to admins_questions_path
   end

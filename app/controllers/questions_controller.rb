@@ -75,7 +75,7 @@ class QuestionsController < ApplicationController
   def destroy
     question = Question.find(params[:id])
     if current_user == question.user
-      question.answers.destroy_all && question.destroy!
+      question.destroy!
       flash[:success] = '質問を削除しました'
       redirect_to questions_path
     else

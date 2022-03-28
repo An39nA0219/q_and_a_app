@@ -6,8 +6,6 @@ class Admins::UsersController < Admins::BaseController
 
   def destroy
     user = User.find(params[:id])
-    user.answers.destroy_all
-    user.questions.destroy_all
     user.image.purge
     user.destroy!
     flash[:success] = 'アカウントを削除しました'

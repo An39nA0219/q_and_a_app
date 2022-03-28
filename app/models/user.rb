@@ -9,8 +9,8 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   validates :password_digest, presence: true
 
-  has_many :questions
-  has_many :answers
+  has_many :questions, dependent: :destroy
+  has_many :answers, dependent: :destroy
   has_one_attached :image
 
   scope :all_others, ->(user_id) { where.not(id: user_id) }
