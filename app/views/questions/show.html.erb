@@ -1,0 +1,24 @@
+<div class="wrapper">
+  <div class="container">
+    <%= render 'layouts/question', question: @question, show_path: nil %>
+  </div>
+  <div class="container"">
+    <% if logged_in? %>
+      <h3>回答する</h3>
+      <%= form_with url: answers_path do |f| %>
+        <div class="form-group">
+          <%= f.label :body, '回答内容' %>
+          <%= f.text_area :body, rows: 5, class: 'form-control' %>
+        </div>
+        <%= f.hidden_field :question_id, value: @question.id %>
+        <%= f.submit '回答する', class: 'btn btn-primary btn-block' %>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="container">
+    <h3>回答一覧</h3>
+    <% @answers.each do |answer| %>
+      <%= render 'layouts/answer', answer: answer %>
+    <% end %>
+  </div>
+</div>

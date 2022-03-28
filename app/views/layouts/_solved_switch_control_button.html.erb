@@ -1,0 +1,5 @@
+<% if question.solved %> <%= button_to '未解決に戻す', question_status_path(id:
+question.id), method: :delete, data: {confirm: "未解決にする"}, class: "btn
+btn-primary button" %> <% else %> <%= button_to '解決済みにする',
+question_statuses_path(id: question.id), data: {confirm: "解決済みにする"},
+class: "btn btn-primary button" %> <% end %>
