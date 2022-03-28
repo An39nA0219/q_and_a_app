@@ -13,12 +13,11 @@
     <div class="right-part" style="display: flex; width: 100%">
       <div style="width: 80%"><%= answer.body %></div>
       <div>
-        <% if is_for_admin? %> <%= button_to '削除',
-        admins_answer_path(answer.id), method: :delete, data: { confirm:
-        "削除しますか？" }, class: "btn btn-danger button" %> <% elsif
-        !is_for_admin? && current_user == answer.user %> <%= button_to '削除',
-        answer_path(answer.id), method: :delete, data: { confirm:
-        "削除しますか？" }, class: "btn btn-danger button" %> <% end %>
+        <% if is_for_admin? %>
+          <%= button_to '削除', admins_answer_path(answer.id), method: :delete, data: { confirm: "削除しますか？" }, class: "btn btn-danger button" %>
+        <% elsif !is_for_admin? && current_user == answer.user %>
+          <%= button_to '削除', answer_path(answer.id), method: :delete, data: { confirm: "削除しますか？" }, class: "btn btn-danger button" %>
+        <% end %>
       </div>
     </div>
   </div>

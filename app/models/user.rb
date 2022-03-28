@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_secure_password
   before_save { email.downcase! }
   before_create :default_image
+  before_destroy :prevent_to_destroy_admin_user
   validates :name, presence: true
   validates :email, presence: true, length: { maximum: 255 },
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
@@ -28,5 +29,9 @@ class User < ApplicationRecord
     if !self.image.attached?
       self.image.attach(io: File.open(Rails.root.join('app', 'assets', 'images', 'default_user.png')), filename: 'default_user.png', content_type: 'image/png')
     end
+  end
+
+  def prevent_to_destroy_admin_user
+    throw(:abort) if self.admin
   end
 end
